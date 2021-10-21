@@ -4,22 +4,22 @@ import spacy
 from spacy.pipeline import SentenceRecognizer
 import jsonlines
 
-my_parser = argparse.ArgumentParser(description='List the content of a folder')
+ss_parser = argparse.ArgumentParser(description='Segment sentences from a text file and pair them with a link in a jsonlines file')
 
-my_parser.add_argument('Text_file',
+ss_parser.add_argument('Text_file',
                        metavar='text',
                        type=str,
                        help='text file input')
-my_parser.add_argument('Link',
+ss_parser.add_argument('Link',
                        metavar='link',
                        type=str,
                        help='link to document')
-my_parser.add_argument('Jsonl_file',
+ss_parser.add_argument('Jsonl_file',
                        metavar='jsonl',
                        type=str,
                        help='jsonl file output')
 
-args = my_parser.parse_args()
+args = ss_parser.parse_args()
 
 text_path = args.Text_file
 
