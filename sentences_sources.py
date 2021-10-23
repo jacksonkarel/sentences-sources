@@ -37,3 +37,4 @@ with jsonlines.open(jsonl_path, mode='w') as writer:
     for sent in doc.sents:
         sent_link = {"text": sent.text, "link": link}
         writer.write(sent_link)
+text_open = open(text_path, "w")
