@@ -5,7 +5,6 @@ import re
 import spacy
 from spacy.pipeline import SentenceRecognizer
 import jsonlines
-import pdfminer
 from pdfminer.high_level import extract_text
 
 from remove_blanks import remove_blanks
