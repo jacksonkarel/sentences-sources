@@ -3,7 +3,6 @@ import os
 import re
 
 import spacy
-from spacy.pipeline import SentenceRecognizer
 import jsonlines
 from pdfminer.high_level import extract_text
 
@@ -34,11 +33,14 @@ def filetype_extract(file):
         sentence_segment(format_entry)
 
 def sentence_segment(text):
+    model = "en_core_web_lg"
+    nlp = spacy.load(model, exclude=["ner", "parser", "tagger", "lemmatizer"])
+    nlp.enable_pipe("senter")
     doc = nlp(text)
     text_sents = [sent.text.replace('\n', '') for sent in doc.sents]
-
     link = args.Link
     jsonl_path = args.Jsonl_file
+    citation = args.cite
     with jsonlines.open(jsonl_path, mode='w') as writer:
         for sent_text in text_sents:
             sent_link = {"text": sent_text, "link": link}
@@ -53,15 +55,9 @@ ss_parser.add_argument('Jsonl_file', metavar='jsonl', type=str, help='jsonl file
 ss_parser.add_argument('Link', metavar='link', type=str, help='link to document')
 ss_parser.add_argument("--cite", help="text citation")
 
-
 args = ss_parser.parse_args()
 
 input_path = args.Input_path
-citation = args.cite
-
-model = "en_core_web_trf"
-nlp = spacy.load(model, disable=["ner", "textcat"])
-senter = SentenceRecognizer(nlp.vocab, model)
 
 if os.path.isfile(input_path):
     filetype_extract(input_path)
