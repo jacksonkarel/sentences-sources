@@ -6,13 +6,16 @@ pip install -r requirements.txt
 ```
 ## Usage
 ```
-usage: sentences_sources.py [-h] text link jsonl
+usage: sentences_sources.py [-h] [--cite CITE] [--gpu] input jsonl link
 
 positional arguments:
-  text        text file input
-  link        link to document
-  jsonl       jsonl file output
+  input        text file input
+  jsonl        jsonl file output
+  link         link to document
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help   show this help message and exit
+  --cite CITE  text citation
+  --gpu        enable gpu
+
 ```
