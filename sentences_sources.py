@@ -1,5 +1,4 @@
 import argparse
-import os
 
 from text_to_jsonl import Text_to_jsonl
 
@@ -9,7 +8,7 @@ ss_parser.add_argument('input_path', metavar='input', type=str, help='text file 
 ss_parser.add_argument('jsonl_file', metavar='jsonl', type=str, help='jsonl file output')
 ss_parser.add_argument('link', metavar='link', type=str, help='link to document')
 ss_parser.add_argument("--cite", help="text citation")
-ss_parser.add_argument("--gpu", help="enable gpu")
+ss_parser.add_argument("--gpu", help="enable gpu", action="store_true")
 
 args = ss_parser.parse_args()
 
