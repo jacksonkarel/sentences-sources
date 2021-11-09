@@ -1,0 +1,8 @@
+*.jsonl
+*.txt
+*.pdf
+*__pycache__
+*.epub
+*.mobi
+*.mp3
+*.python-version
