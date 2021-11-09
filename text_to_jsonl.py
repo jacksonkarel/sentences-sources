@@ -3,7 +3,7 @@ import re
 
 import spacy
 import jsonlines
-from kaggle.api.kaggle_api_extended import KaggleApi
+# from kaggle.api.kaggle_api_extended import KaggleApi
 
 from helpers import remove_blanks, pdf_text, ebook_text
 
