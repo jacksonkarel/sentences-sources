@@ -3,15 +3,18 @@ import re
 
 import spacy
 import jsonlines
-from pdfminer.high_level import extract_text
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+from helpers import remove_blanks, pdf_text, ebook_text
 
 class Text_to_jsonl:
-    def __init__(self, input_path, jsonl_file, link, cite, gpu):
+    def __init__(self, input_path, output_file, link, cite, gpu, kaggle):
         self.input_path = input_path
-        self.jsonl_file = jsonl_file
+        self.jsonl_file = output_file
         self.link = link
         self.cite = cite
         self.gpu = gpu
+        self.save_kaggle = kaggle
     
     def dir_file_check(self):
         if os.path.isfile(self.input_path):
@@ -19,26 +22,18 @@ class Text_to_jsonl:
         elif os.path.isdir(self.input_path):
             for file in os.scandir(self.input_path):
                 self.filetype_extract(file)
-    def filetype_extract(self, file):
-        if file.endswith(".pdf"):
-            text = extract_text(file)
-            format_entry = self.remove_blanks(text)  
 
-        elif file.endswith(".epub") or file.endswith(".mobi"):
-            sub_exten = re.sub("\.(?!.*\.).*", ".txt", file)
-            sub_space = re.sub(" ", "_", sub_exten)
-            epy_cmd = f"epy -d {file} > {sub_space}"
-            os.system(epy_cmd)
-            entry_open = open(sub_space, 'r')
-            entry_read = entry_open.read()
-            format_entry = self.remove_blanks(entry_read)                
-            rm_cmd = f"rm {sub_space}"
-            os.system(rm_cmd)
-        
-        elif file.endswith(".txt"):
+    def filetype_extract(self, file):
+        if file.endswith(".txt"):
             entry_open = open(file, 'r')
             entry_read = entry_open.read()
-            format_entry = self.remove_blanks(entry_read)
+            format_entry = remove_blanks(entry_read)
+
+        elif file.endswith(".pdf"):
+            format_entry = pdf_text(file)
+
+        elif file.endswith(".epub") or file.endswith(".mobi"):
+            format_entry = ebook_text(file)
         
         self.sentence_segment(format_entry)
 
@@ -55,11 +50,6 @@ class Text_to_jsonl:
                 if self.cite is not None:
                     sent_link["cite"] = self.cite
                 writer.write(sent_link)
-
-    def remove_blanks(self, data):
-        entry_list = data.split('\n')
-        for line in entry_list:
-            if line == '':
-                entry_list.remove(line)
-        no_b_str = '\n'.join(entry_list)
-        return no_b_str  
+        # if self.save_kaggle:
+        #     KaggleApi.authenticate()
+        #     KaggleApi.datasets_create_version_by_id
