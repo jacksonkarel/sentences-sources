@@ -8,13 +8,13 @@ import jsonlines
 from helpers import remove_blanks, pdf_text, ebook_text
 
 class Text_to_jsonl:
-    def __init__(self, input_path, output_file, link, cite, gpu, kaggle):
+    def __init__(self, input_path, output, link, cite, gpu):
         self.input_path = input_path
-        self.jsonl_file = output_file
+        self.jsonl_file = output
         self.link = link
         self.cite = cite
         self.gpu = gpu
-        self.save_kaggle = kaggle
+        # self.save_kaggle = kaggle
     
     def dir_file_check(self):
         if os.path.isfile(self.input_path):
