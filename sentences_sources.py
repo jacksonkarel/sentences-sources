@@ -32,9 +32,9 @@ else:
     elif output_file.endswith(".txt"):
         if input_file.endswith(".pdf"):
             format_entry = pdf_text(input_file)
-
+            
         elif input_file.endswith(".epub") or input_file.endswith(".mobi"):
             format_entry = ebook_text(input_file)
         
-        with open(output_file) as f:
-            write_text = f.write(format_entry)
+        with open(output_file, "w+") as f:
+                write_text = f.write(format_entry)
