@@ -1,4 +1,3 @@
-import re
 import sys
 
 from pdfminer.high_level import extract_text
